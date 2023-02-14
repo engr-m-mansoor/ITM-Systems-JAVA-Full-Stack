@@ -1,0 +1,16 @@
+<html>
+<head></head>
+<body>
+
+<form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    <label >Age</label>
+    <input type="text" th:field="*{age}" id="age" placeholder="Age">
+    <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span>
+    <input type="submit" value="Add User">   
+</form>
+
+</body>
+</html>
