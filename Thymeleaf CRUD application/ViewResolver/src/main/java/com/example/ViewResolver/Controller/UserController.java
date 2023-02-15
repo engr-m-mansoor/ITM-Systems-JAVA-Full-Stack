@@ -15,42 +15,42 @@ import com.example.ViewResolver.Repository.UserRepository;
 @Controller
 public class UserController {
 	@Autowired
-	private UserRepository repo;
+	private UserRepository repository;
 
-	@GetMapping("/index")
+	@GetMapping("/Index")
 	public String showUserList(Model model) {
-		model.addAttribute("users", repo.findAll());
+		model.addAttribute("users", repository.findAll());
 		return "index";
 	}
 	
-	@GetMapping("/signup")
+	@GetMapping("/Signup")
     public String showSignUpForm(User user) {
         return "add-user";
     }
 	
-	@PostMapping("/adduser")
+	@PostMapping("/Adduser")
     public String addUser(@Validated User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-user";
         }
-        repo.save(user);
+        repository.save(user);
         return "redirect:/index";
     }
 	
-	@PostMapping("/update/{id}")
+	@PostMapping("/Update/{id}")
 	public String updateUser(@PathVariable("id") int id, @Validated User user, 
 	  BindingResult result, Model model) {
 	    if (result.hasErrors()) {
 	        user.setId(id);
 	        return "update-user";
 	    }        
-	    repo.save(user);
+	    repository.save(user);
 	    return "redirect:/index";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") int id, Model model) {
-	    User user = repo.findById(id)
+	    User user = repository.findById(id)
 	      .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 	    
 	    model.addAttribute("user", user);
@@ -59,9 +59,9 @@ public class UserController {
 	
 	@GetMapping("/delete/{id}")
 	public String deleteUser(@PathVariable("id") int id, Model model) {
-	    User user = repo.findById(id)
+	    User user = repository.findById(id)
 	      .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-	    repo.delete(user);
+	    repository.delete(user);
 	    return "redirect:/index";
 	}
 
